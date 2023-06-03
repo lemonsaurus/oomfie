@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "oomfie"
+version = "0.1.0"
+description = "A community bot for the Oomfie and the Banshees guild"
+authors = ["Lemonsaurus <2098517+lemonsaurus@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+"discord.py" = "2.1"
+aiohttp = "^3.8.4"
+aiowowapi = "^2.1.4"
+Pillow = "^9.4.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
