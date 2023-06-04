@@ -42,7 +42,7 @@ class Wow(Cog):
         
         await ctx.send(file=File(image, "super_cool_image_you_guys.png"))
 
-    async def _get_image(self, player_name: str, image_type: str, realm: str, region: str = "eu"):
+    async def _get_image(self, player_name: str, image_type: str, realm: str = "argent-dawn", region: str = "eu"):
         """Get a certain player image."""
         async with WowApi(BNET_CLIENT_ID, BNET_CLIENT_SECRET, region, request_debugging=True) as Client:
             images = await Client.Retail.Profile.get_character_media_summary(realm, player_name.lower())
@@ -56,7 +56,7 @@ class Wow(Cog):
             elif image_type == "main-raw":
                 return images["assets"][3]["value"]
             
-    async def _get_race(self, player_name: str, realm: str, region: str = "eu"):
+    async def _get_race(self, player_name: str, realm: str = "argent-dawn", region: str = "eu"):
         """Get the player race and gender, e.g. Male Dark Iron Dwarf"""
         async with WowApi(BNET_CLIENT_ID, BNET_CLIENT_SECRET, region, request_debugging=True) as Client:
             profile = await Client.Retail.Profile.get_character_profile_summary(realm, player_name.lower())
@@ -66,7 +66,7 @@ class Wow(Cog):
             return f"{gender} {race}"
 
     @commands.command()
-    async def show_character(self, ctx: Context, player: str, realm: str, image_type: str = "main", region: str = "eu"):
+    async def show_character(self, ctx: Context, player: str, realm: str = "argent-dawn", image_type: str = "main", region: str = "eu"):
         """Show an image of a specific WoW character."""
         image = await self._get_image(player, image_type, realm, region)
         await self._send_image(ctx, image_url=image)
