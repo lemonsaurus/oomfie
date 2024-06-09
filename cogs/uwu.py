@@ -207,7 +207,7 @@ class Uwu(Cog):
         # Return original if no replacement
         return input_string
 
-    def _uwuify(self, input_string: str, *, stutter_strength: float = 0.2, emoji_strength: float = 0.1) -> str:
+    def _uwuify(self, input_string: str, *, stutter_strength: float = 0.2, emoji_strength: float = 0.25) -> str:
         """Takes a string and returns an uwuified version of it."""
         input_string = input_string.lower()
         input_string = self._word_replace(input_string)
