@@ -118,7 +118,7 @@ class Uwu(Cog):
         """
         embed: Embed | None = None
 
-        msg = await self._get_discord_message(self, ctx, text)
+        msg = await self._get_discord_message(ctx, text)
         # Ensure the user has read permissions for the channel the message is in
         if isinstance(msg, Message):
             permissions = msg.channel.permissions_for(ctx.author)
