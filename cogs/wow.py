@@ -169,10 +169,20 @@ class Wow(Cog):
             # Sort the list of allowed classes so that the exclusions are at the end
             list_of_specs.sort(key=lambda x: x[0] == "-")
 
-            # Create a superset of allowed classes
-            allowed_classes = []
-            for class_type in list_of_specs:
+            # If there are only exclusions, we should exclude
+            # them from the full list
+            only_excludes = True
+            for spec in list_of_specs:
+                if spec[0] != "-":
+                    only_excludes = False
+                    break
+            if only_excludes:
+                allowed_classes = ["ALL"]
+            else:
+                allowed_classes = []
 
+            # Create a superset of allowed classes
+            for class_type in list_of_specs:
                 if class_type in CLASSES:
                     allowed_classes.extend(CLASS_TO_SPECS[class_type])
                 elif class_type in ALLOWED_CLASS_TYPES:
@@ -189,10 +199,10 @@ class Wow(Cog):
         
         # Roll the classes like a slot machine!
         message = None
-        rolls = random.randint(8, 14)
+        rolls = random.randint(3, 6)
         for i in range(rolls):            
             new_class = await self._get_random_class_spec(allowed_classes)
-            time.sleep(0.05 * (i / 1.75))
+            time.sleep(0.075 * (i / 1.85))
             
             # During the first iteration, send the message
             if i == 0: 
