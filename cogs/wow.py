@@ -123,7 +123,13 @@ class Wow(Cog):
 
         # Only select from classes that match the class type
         if class_type != "ALL":
-            list_of_specs = class_type.split(" ")
+
+            if ", " in class_type:
+                list_of_specs = class_type.split(", ")
+            elif "," in class_type:
+                list_of_specs = class_type.split(",")
+            else:
+                list_of_specs = class_type.split(" ")
 
             # Validate data
             for spec in list_of_specs:
@@ -150,7 +156,7 @@ class Wow(Cog):
         rolls = random.randint(3, 10)
         for i in range(rolls):            
             new_class = await self._get_random_class_spec(allowed_classes)
-            time.sleep(0.05 * i)
+            time.sleep(0.03 * (i / 2))
             
             # During the first iteration, send the message
             if i == 0: 
@@ -159,7 +165,7 @@ class Wow(Cog):
 
             # On the last iteration, add some celebratory stuff to show we're done
             elif i == rolls - 1:
-                new_class = f"{new_class}! 🎉🎉🎉"
+                new_class = f"{new_class}!   🎉🎉🎉"
                 await message.edit(content=new_class)
 
 
