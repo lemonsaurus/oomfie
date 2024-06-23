@@ -10,7 +10,13 @@ from discord.ext import commands
 from discord.ext.commands import Cog, Bot, Context
 
 from cogs.uwu import Uwu
-from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_ICONS, CLASS_BREAKDOWN
+from constants.warcraft import LONGCLASS_TO_SHORTCLASS 
+from constants.warcraft import CLASS_SPECS_FULL 
+from constants.warcraft import CLASS_ICONS
+from constants.warcraft import CLASS_BREAKDOWN
+from constants.warcraft import HEALERS
+from constants.warcraft import TANKS
+from constants.warcraft import DPS
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
@@ -72,9 +78,9 @@ class Wow(Cog):
 
             return f"{gender} {race}"
         
-    async def _get_random_class_spec(self) -> str:
+    async def _get_random_class_spec(self, allowed_classes: list[str]) -> str:
         """Select and return a random class/spec, and add the correct icon string"""
-        selected_class_spec = random.choice(CLASS_SPECS_FULL)
+        selected_class_spec = random.choice(allowed_classes)
         selected_class = CLASS_BREAKDOWN[selected_class_spec][0]
         selected_spec = CLASS_BREAKDOWN[selected_class_spec][1]
         selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class_spec]
@@ -98,13 +104,35 @@ class Wow(Cog):
         await self._send_image(ctx, image_url=image)
 
     @commands.command(aliases=['new-main', "newmain"])
-    async def new_main(self, ctx: Context):
+    async def new_main(self, ctx: Context, *, class_type: str = "ALL"):
         """!new_main, !new-main, or !newMain"""
+
+        # Only select from classes that match the class type
+        if class_type != "ALL":
+            list_of_specs = class_type.split(" ")
+
+            # Validate data
+            for spec in list_of_specs:
+                if spec not in ("ALL", "TANKS", "TANK", "HEALERS", "HEALER", "DPS"):
+                    return await ctx.send("❌ Invalid class type. Please use one of 'TANKS', 'HEALERS', 'DPS', or 'ALL'.")
+            
+            # Create a superset of allowed classes
+            allowed_classes = []
+            for class_type in list_of_specs:
+
+                if class_type in ("TANK", "HEALER"):
+                    class_type += "S"
+
+                allowed_classes.extend(globals()[class_type])
+
+        # If the class type is ALL, just use all classes
+        else:
+            allowed_classes = CLASS_SPECS_FULL
         
         # Roll the classes like a slot machine!
         message = None
         for i in random.range(3, 10):            
-            new_class = await self._get_random_class_spec()
+            new_class = await self._get_random_class_spec(allowed_classes)
             time.sleep(0.05 * i)
             
             # During the first iteration, send the message

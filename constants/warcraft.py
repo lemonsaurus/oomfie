@@ -126,6 +126,53 @@ CLASS_BREAKDOWN = {
     "Protection Warrior": ("Warrior", "Protection"),
 }
 
+TANKS = [
+    "Blood Death Knight",
+    "Vengeance Demon Hunter",
+    "Guardian Druid",
+    "Brewmaster Monk",
+    "Protection Paladin",
+    "Protection Warrior"
+]
+
+HEALERS = [
+    "Restoration Druid",
+    "Preservation Evoker",
+    "Mistweaver Monk",
+    "Holy Paladin",
+    "Discipline Priest",
+    "Holy Priest",
+    "Restoration Shaman"
+]
+
+DPS = [
+    "Frost Death Knight",
+    "Unholy Death Knight",
+    "Havoc Demon Hunter",
+    "Balance Druid",
+    "Feral Druid",
+    "Devastation Evoker",
+    "Augmentation Evoker",
+    "Beast Mastery Hunter",
+    "Marksmanship Hunter",
+    "Survival Hunter",
+    "Arcane Mage",
+    "Fire Mage",
+    "Frost Mage",
+    "Windwalker Monk",
+    "Retribution Paladin",
+    "Shadow Priest",
+    "Assassination Rogue",
+    "Outlaw Rogue",
+    "Subtlety Rogue",
+    "Elemental Shaman",
+    "Enhancement Shaman",
+    "Affliction Warlock",
+    "Demonology Warlock",
+    "Destruction Warlock",
+    "Arms Warrior",
+    "Fury Warrior"
+]
 
 CLASS_SPECS_FULL = [
     "Blood Death Knight",
