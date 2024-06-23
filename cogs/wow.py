@@ -16,14 +16,16 @@ from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_
 BNET_CLIENT_ID = os.environ["BNET_CLIENT_ID"]
 BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
 
-uwuify = Uwu()._uwuify
-
 class Wow(Cog):
     """Commands that leverage the WoW API."""
 
     def __init__(self, bot: Bot):
         """Initialize this cog with the Bot instance."""
         self.bot = bot
+
+    async def _uwuify(self, text: str):
+        """Uwuify the text."""
+        return Uwu(self.bot)._uwuify(text)
 
     async def _get_image_from_url(self, image_url: str):
         """Use aiohttp to download a file, and return the IO stream for this file."""
@@ -92,9 +94,19 @@ class Wow(Cog):
     @commands.command(aliases=['new-main', "newmain"])
     async def new_main(self, ctx: Context):
         """!new_main, !new-main, or !newMain"""
-        new_class = self._get_random_class_spec()        
+        
+        # Roll the classes like a slot machine!
+        message = None
+        for i in range(10):            
+            new_class = self._get_random_class_spec()
+            
+            # During the first iteration, send the message
+            if i == 0: 
+                message = await ctx.send(content=new_class)  # Returns a Message object
 
-        await ctx.send(content=new_class)
+            # For all subsequent iterations, edit the message
+            else:
+                await message.edit(content=new_class)
 
 
 
