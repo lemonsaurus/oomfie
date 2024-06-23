@@ -78,11 +78,12 @@ class Wow(Cog):
         selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
 
         # Add a very small chance of using the treat icon instead of the class icon
-        #if random.randint(1, 100) <= 3:
-        if True:
+        if random.randint(1, 100) <= 6:
             selected_class_icon = f"<:treat:{CLASS_ICONS['treat']}>"
             uwu_class = await self._uwuify(selected_class)
             return f"{selected_class_icon}   **{uwu_class.title()}**"
+        
+        # Otherwise, we do it all properly and shit
         else:
             selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
             return f"{selected_class_icon}   **{selected_class}**"
@@ -101,7 +102,7 @@ class Wow(Cog):
         message = None
         for i in range(5):            
             new_class = await self._get_random_class_spec()
-            time.sleep(0.2 * i)
+            time.sleep(0.15 * i)
             
             # During the first iteration, send the message
             if i == 0: 
@@ -109,9 +110,7 @@ class Wow(Cog):
 
             # For all subsequent iterations, edit the message
             else:
-                _message = await ctx.send(content=new_class)
-                await message.delete()
-                message = _message
+                await message.edit(content=new_class)
 
 
 
