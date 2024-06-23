@@ -14,7 +14,7 @@ from constants.warcraft import LONGCLASS_TO_SHORTCLASS
 from constants.warcraft import CLASS_SPECS_FULL 
 from constants.warcraft import CLASS_ICONS
 from constants.warcraft import CLASS_BREAKDOWN
-from constants.warcraft import HEALERS, TANKS, MELEE, DPS, RANGED, CLASSES, CLASS_TO_SPECS
+from constants.warcraft import HEALER, TANK, MELEE, DPS, RANGED, CLASSES, CLASS_TO_SPECS
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
@@ -23,8 +23,7 @@ BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
 
 # Constants
 ALLOWED_CLASS_TYPES = (
-    "ALL", "TANKS", "TANK", "HEALERS", 
-    "HEALER", "DPS", "RANGED", "MELEE",
+    "ALL", "TANK", "HEALER", "DPS", "RANGED", "MELEE",
 )
 
 class Wow(Cog):
@@ -141,29 +140,49 @@ class Wow(Cog):
                 list_of_specs.remove("KNIGHT")
                 list_of_specs.append("DEATH KNIGHT")
 
+            if "-DEATH" in list_of_specs:
+                list_of_specs.remove("-DEATH")
+                list_of_specs.remove("KNIGHT")
+                list_of_specs.append("-DEATH KNIGHT")
+
             if "DEMON" in list_of_specs:
                 list_of_specs.remove("DEMON")
                 list_of_specs.remove("HUNTER")
                 list_of_specs.append("DEMON HUNTER")
 
+            if "-DEMON" in list_of_specs:
+                list_of_specs.remove("-DEMON")
+                list_of_specs.remove("HUNTER")
+                list_of_specs.append("-DEMON HUNTER")
+
             # Validate data
             for spec in list_of_specs:
-                if spec not in ALLOWED_CLASS_TYPES and spec not in CLASSES:
+                if (
+                    spec not in ALLOWED_CLASS_TYPES 
+                    and spec not in CLASSES
+                    and f"-{spec}" not in ALLOWED_CLASS_TYPES
+                    and f"-{spec}" not in CLASSES
+                ):
                     return await ctx.send(f"❌ Invalid class type. Please provide something like 'healer', 'tank', 'ranged' or 'hunter'.")
             
+            # Sort the list of allowed classes so that the exclusions are at the end
+            list_of_specs.sort(key=lambda x: x[0] == "-")
+
             # Create a superset of allowed classes
             allowed_classes = []
             for class_type in list_of_specs:
 
                 class_type = class_type
 
-                if class_type in ("TANK", "HEALER"):
-                    class_type += "S"
-
                 if class_type in CLASSES:
                     allowed_classes.extend(CLASS_TO_SPECS[class_type])
-                else:
+                elif class_type in ALLOWED_CLASS_TYPES:
                     allowed_classes.extend(globals()[class_type])
+                elif f"-{class_type}" in CLASSES:
+                    allowed_classes = [spec for spec in allowed_classes if spec not in CLASS_TO_SPECS[class_type[1:]]]
+                elif f"-{class_type}" in ALLOWED_CLASS_TYPES:
+                    allowed_classes = [spec for spec in allowed_classes if spec not in globals()[class_type[1:]]]
+                    
 
         # If the class type is ALL, just use all classes
         else:
@@ -171,7 +190,7 @@ class Wow(Cog):
         
         # Roll the classes like a slot machine!
         message = None
-        rolls = random.randint(7, 14)
+        rolls = random.randint(8, 14)
         for i in range(rolls):            
             new_class = await self._get_random_class_spec(allowed_classes)
             time.sleep(0.05 * (i / 1.75))

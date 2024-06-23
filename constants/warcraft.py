@@ -126,7 +126,7 @@ CLASS_BREAKDOWN = {
     "Protection Warrior": ("Warrior", "Protection"),
 }
 
-TANKS = [
+TANK = [
     "Blood Death Knight",
     "Vengeance Demon Hunter",
     "Guardian Druid",
@@ -135,7 +135,7 @@ TANKS = [
     "Protection Warrior"
 ]
 
-HEALERS = [
+HEALER = [
     "Restoration Druid",
     "Preservation Evoker",
     "Mistweaver Monk",
