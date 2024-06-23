@@ -10,7 +10,7 @@ from discord.ext import commands
 from discord.ext.commands import Cog, Bot, Context
 
 from cogs.uwu import Uwu
-from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_ICONS 
+from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_ICONS, CLASS_BREAKDOWN
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
@@ -74,19 +74,22 @@ class Wow(Cog):
         
     async def _get_random_class_spec(self) -> str:
         """Select and return a random class/spec, and add the correct icon string"""
-        selected_class = random.choice(CLASS_SPECS_FULL)
-        selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
+        selected_class_spec = random.choice(CLASS_SPECS_FULL)
+        selected_class = CLASS_BREAKDOWN[selected_class_spec][0]
+        selected_spec = CLASS_BREAKDOWN[selected_class_spec][1]
+        selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class_spec]
 
         # Add a very small chance of using the treat icon instead of the class icon
         if random.randint(1, 100) <= 6:
             selected_class_icon = f"<:treat:{CLASS_ICONS['treat']}>"
             uwu_class = await self._uwuify(selected_class)
-            return f"{selected_class_icon}   **{uwu_class.title()}**"
+            uwu_spec = await self._uwuify(selected_spec)
+            return f"{selected_class_icon}   **{uwu_spec.title()}** {uwu_class.title()}"
         
         # Otherwise, we do it all properly and shit
         else:
             selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
-            return f"{selected_class_icon}   **{selected_class}**"
+            return f"{selected_class_icon}   **{selected_spec}** {selected_class}"
 
     @commands.command()
     async def show_character(self, ctx: Context, player: str, realm: str = "argent-dawn", image_type: str = "main", region: str = "eu"):
