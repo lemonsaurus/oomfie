@@ -25,6 +25,7 @@ BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
 ALLOWED_CLASS_TYPES = (
     "ALL", "TANK", "HEALER", "DPS", "RANGED", "MELEE",
 )
+ALL = HEALER + TANK + DPS
 
 class Wow(Cog):
     """Commands that leverage the WoW API."""
@@ -192,7 +193,6 @@ class Wow(Cog):
                 elif class_type[0] == "-" and class_type[1:] in ALLOWED_CLASS_TYPES:
                     allowed_classes = [spec for spec in allowed_classes if spec not in globals()[class_type[1:]]]
                     
-
         # If the class type is ALL, just use all classes
         else:
             allowed_classes = CLASS_SPECS_FULL
