@@ -14,14 +14,18 @@ from constants.warcraft import LONGCLASS_TO_SHORTCLASS
 from constants.warcraft import CLASS_SPECS_FULL 
 from constants.warcraft import CLASS_ICONS
 from constants.warcraft import CLASS_BREAKDOWN
-from constants.warcraft import HEALERS
-from constants.warcraft import TANKS
-from constants.warcraft import DPS
+from constants.warcraft import HEALERS, TANKS, MELEE, DPS, RANGED
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
 BNET_CLIENT_ID = os.environ["BNET_CLIENT_ID"]
 BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
+
+# Constants
+ALLOWED_CLASS_TYPES = (
+    "ALL", "TANKS", "TANK", "HEALERS", 
+    "HEALER", "DPS", "RANGED", "MELEE",
+)
 
 class Wow(Cog):
     """Commands that leverage the WoW API."""
@@ -123,8 +127,8 @@ class Wow(Cog):
 
             # Validate data
             for spec in list_of_specs:
-                if spec.upper() not in ("ALL", "TANKS", "TANK", "HEALERS", "HEALER", "DPS"):
-                    return await ctx.send("❌ Invalid class type. Please use one of 'TANKS', 'HEALERS', 'DPS', or 'ALL'.")
+                if spec.upper() not in ALLOWED_CLASS_TYPES:
+                    return await ctx.send(f"❌ Invalid class type. Please use one of {", ".join(ALLOWED_CLASS_TYPES)}.")
             
             # Create a superset of allowed classes
             allowed_classes = []

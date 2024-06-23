@@ -174,6 +174,38 @@ DPS = [
     "Fury Warrior"
 ]
 
+MELEE = [
+    "Frost Death Knight",
+    "Unholy Death Knight",
+    "Havoc Demon Hunter",
+    "Feral Druid",
+    "Windwalker Monk",
+    "Retribution Paladin",
+    "Assassination Rogue",
+    "Outlaw Rogue",
+    "Subtlety Rogue",
+    "Enhancement Shaman",
+    "Survival Hunter",
+    "Arms Warrior",
+    "Fury Warrior"
+]
+
+RANGED = [
+    "Balance Druid",
+    "Devastation Evoker",
+    "Augmentation Evoker",
+    "Beast Mastery Hunter",
+    "Marksmanship Hunter",
+    "Arcane Mage",
+    "Fire Mage",
+    "Frost Mage",
+    "Shadow Priest",
+    "Elemental Shaman",
+    "Affliction Warlock",
+    "Demonology Warlock",
+    "Destruction Warlock"
+]
+
 CLASS_SPECS_FULL = [
     "Blood Death Knight",
     "Frost Death Knight",
