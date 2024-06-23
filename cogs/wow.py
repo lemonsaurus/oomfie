@@ -1,13 +1,14 @@
-import aiohttp
 import io
 import os
 import random
 
+import aiohttp
 from aiowowapi import WowApi
 from discord import File
 from discord.ext import commands
 from discord.ext.commands import Cog, Bot, Context
 
+from cogs.uwu import Uwu
 from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_ICONS 
 
 # These also need to exist in the environment variables for Railway, or we 
@@ -15,6 +16,7 @@ from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_
 BNET_CLIENT_ID = os.environ["BNET_CLIENT_ID"]
 BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
 
+uwuify = Uwu()._uwuify
 
 class Wow(Cog):
     """Commands that leverage the WoW API."""
@@ -66,6 +68,20 @@ class Wow(Cog):
             gender = profile["gender"]["name"]
 
             return f"{gender} {race}"
+        
+    async def _get_random_class_spec(self):
+        """Select and return a random class/spec, and add the correct icon string"""
+        selected_class = random.choice(CLASS_SPECS_FULL)
+        selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
+
+        # Add a very small chance of using the treat icon instead of the class icon
+        #if random.randint(1, 100) <= 3:
+        if True:
+            selected_class_icon = f"<:treat:{CLASS_ICONS['treat']}>"
+            return f"{selected_class_icon}   **{uwuify(selected_class)}**"
+        else:
+            selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
+            return f"{selected_class_icon}   **{selected_class}**"
 
     @commands.command()
     async def show_character(self, ctx: Context, player: str, realm: str = "argent-dawn", image_type: str = "main", region: str = "eu"):
@@ -76,14 +92,9 @@ class Wow(Cog):
     @commands.command(aliases=['new-main', "newmain"])
     async def new_main(self, ctx: Context):
         """!new_main, !new-main, or !newMain"""
-        selected_class = random.choice(CLASS_SPECS_FULL)
+        new_class = self._get_random_class_spec()        
 
-        selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
-        selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
-
-        return_string = f"{selected_class_icon} {selected_class}"
-
-        await ctx.send(content=return_string)
+        await ctx.send(content=new_class)
 
 
 
