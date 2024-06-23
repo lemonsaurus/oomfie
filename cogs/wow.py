@@ -105,7 +105,17 @@ class Wow(Cog):
 
     @commands.command(aliases=['new-main', "newmain"])
     async def new_main(self, ctx: Context, *, class_type: str = "ALL"):
-        """!new_main, !new-main, or !newMain"""
+        """
+        Spin the wheel and select a new random main.
+
+        This method optionally takes one or more class types.
+        
+        Example:
+            !new-main tank healers   # This will only return tanks and healers
+            !new_main                # This may return any class
+            !new_main all            # This may return any class
+            !new_main dps            # This may only return DPS classes        
+        """
 
         # Only select from classes that match the class type
         if class_type != "ALL":
@@ -113,12 +123,14 @@ class Wow(Cog):
 
             # Validate data
             for spec in list_of_specs:
-                if spec not in ("ALL", "TANKS", "TANK", "HEALERS", "HEALER", "DPS"):
+                if spec.upper() not in ("ALL", "TANKS", "TANK", "HEALERS", "HEALER", "DPS"):
                     return await ctx.send("❌ Invalid class type. Please use one of 'TANKS', 'HEALERS', 'DPS', or 'ALL'.")
             
             # Create a superset of allowed classes
             allowed_classes = []
             for class_type in list_of_specs:
+
+                class_type = class_type.upper()
 
                 if class_type in ("TANK", "HEALER"):
                     class_type += "S"
@@ -131,7 +143,7 @@ class Wow(Cog):
         
         # Roll the classes like a slot machine!
         message = None
-        for i in random.range(3, 10):            
+        for i in range(random.randint(3, 10)):            
             new_class = await self._get_random_class_spec(allowed_classes)
             time.sleep(0.05 * i)
             
