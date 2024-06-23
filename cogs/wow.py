@@ -115,11 +115,11 @@ class Wow(Cog):
         image = await self._get_image(player, image_type, realm, region)
         await self._send_image(ctx, image_url=image)
 
-    @commands.command(aliases=['new-main', "newmain", "newMain"])
+    @commands.command(aliases=['new-main', "newmain"])
     async def new_main(self, ctx: Context):
         """!new_main, !new-main, or !newMain"""
         selected_class = random.choice(CLASSES_AND_SPECS)
-        
+
         await ctx.send(content=selected_class)
 
 
