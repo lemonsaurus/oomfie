@@ -72,7 +72,7 @@ class Wow(Cog):
 
             return f"{gender} {race}"
         
-    async def _get_random_class_spec(self):
+    async def _get_random_class_spec(self) -> str:
         """Select and return a random class/spec, and add the correct icon string"""
         selected_class = random.choice(CLASS_SPECS_FULL)
         selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
@@ -81,7 +81,7 @@ class Wow(Cog):
         #if random.randint(1, 100) <= 3:
         if True:
             selected_class_icon = f"<:treat:{CLASS_ICONS['treat']}>"
-            return f"{selected_class_icon}   **{uwuify(selected_class)}**"
+            return f"{selected_class_icon}   **{await self._uwuify(selected_class)}**"
         else:
             selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
             return f"{selected_class_icon}   **{selected_class}**"
