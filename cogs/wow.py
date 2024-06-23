@@ -114,10 +114,10 @@ class Wow(Cog):
         This method optionally takes one or more class types.
         
         Example:
-            !new-main tank healers   # This will only return tanks and healers
+            !new-main tank healer    # This will only return tanks and healers
             !new_main                # This may return any class
-            !new_main all            # This may return any class
-            !new_main dps            # This may only return DPS classes        
+            !new_main dps -mage      # This may only return DPS classes, but no mages        
+            !new_main healer druid   # This may return any druid or any healer
         """
 
         # Only select from classes that match the class type
