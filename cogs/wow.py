@@ -98,7 +98,7 @@ class Wow(Cog):
         # Roll the classes like a slot machine!
         message = None
         for i in range(10):            
-            new_class = self._get_random_class_spec()
+            new_class = await self._get_random_class_spec()
             
             # During the first iteration, send the message
             if i == 0: 
