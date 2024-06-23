@@ -247,3 +247,87 @@ CLASS_SPECS_FULL = [
     "Fury Warrior",
     "Protection Warrior"
 ]
+
+CLASSES = [
+    "DEATH KNIGHT",
+    "DEMON HUNTER",
+    "DRUID",
+    "EVOKER",
+    "HUNTER",
+    "MAGE",
+    "MONK",
+    "PALADIN",
+    "PRIEST",
+    "ROGUE",
+    "SHAMAN",
+    "WARLOCK",
+    "WARRIOR"
+]
+
+CLASS_TO_SPECS = {
+    "DEATH KNIGHT": [
+        "Blood Death Knight",
+        "Frost Death Knight",
+        "Unholy Death Knight"
+    ],
+    "DEMON HUNTER": [
+        "Havoc Demon Hunter",
+        "Vengeance Demon Hunter"
+    ],
+    "DRUID": [
+        "Balance Druid",
+        "Feral Druid",
+        "Guardian Druid",
+        "Restoration Druid"
+    ],
+    "EVOKER": [
+        "Devastation Evoker",
+        "Preservation Evoker",
+        "Augmentation Evoker"
+    ],
+    "HUNTER": [
+        "Beast Mastery Hunter",
+        "Marksmanship Hunter",
+        "Survival Hunter"
+    ],
+    "MAGE": [
+        "Arcane Mage",
+        "Fire Mage",
+        "Frost Mage"
+    ],
+    "MONK": [
+        "Brewmaster Monk",
+        "Mistweaver Monk",
+        "Windwalker Monk"
+    ],
+    "PALADIN": [
+        "Holy Paladin",
+        "Protection Paladin",
+        "Retribution Paladin"
+    ],
+    "PRIEST": [
+        "Discipline Priest",
+        "Holy Priest",
+        "Shadow Priest"
+    ],
+    "ROGUE": [
+        "Assassination Rogue",
+        "Outlaw Rogue",
+        "Subtlety Rogue"
+    ],
+    "SHAMAN": [
+        "Elemental Shaman",
+        "Enhancement Shaman",
+        "Restoration Shaman"
+    ],
+    "WARLOCK": [
+        "Affliction Warlock",
+        "Demonology Warlock",
+        "Destruction Warlock"
+    ],
+    "WARRIOR": [
+        "Arms Warrior",
+        "Fury Warrior",
+        "Protection Warrior"
+    ]
+}

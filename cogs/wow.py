@@ -14,7 +14,7 @@ from constants.warcraft import LONGCLASS_TO_SHORTCLASS
 from constants.warcraft import CLASS_SPECS_FULL 
 from constants.warcraft import CLASS_ICONS
 from constants.warcraft import CLASS_BREAKDOWN
-from constants.warcraft import HEALERS, TANKS, MELEE, DPS, RANGED
+from constants.warcraft import HEALERS, TANKS, MELEE, DPS, RANGED, CLASSES, CLASS_TO_SPECS
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
@@ -124,6 +124,7 @@ class Wow(Cog):
         # Only select from classes that match the class type
         if class_type != "ALL":
 
+            # Split it up!
             if ", " in class_type:
                 list_of_specs = class_type.split(", ")
             elif "," in class_type:
@@ -131,21 +132,38 @@ class Wow(Cog):
             else:
                 list_of_specs = class_type.split(" ")
 
+            # Uppercase everything
+            list_of_specs = [spec.upper() for spec in list_of_specs]
+
+            # Fix death knights and demon hunters, which will now be split.
+            if "DEATH" in list_of_specs:
+                list_of_specs.remove("DEATH")
+                list_of_specs.remove("KNIGHT")
+                list_of_specs.append("DEATH KNIGHT")
+
+            if "DEMON" in list_of_specs:
+                list_of_specs.remove("DEMON")
+                list_of_specs.remove("HUNTER")
+                list_of_specs.append("DEMON HUNTER")
+
             # Validate data
             for spec in list_of_specs:
-                if spec.upper() not in ALLOWED_CLASS_TYPES:
-                    return await ctx.send(f"❌ Invalid class type. Please use one of {', '.join(ALLOWED_CLASS_TYPES)}.")
+                if spec not in ALLOWED_CLASS_TYPES and spec not in CLASSES:
+                    return await ctx.send(f"❌ Invalid class type. Please provide something like 'healer', 'tank', 'ranged' or 'hunter'.")
             
             # Create a superset of allowed classes
             allowed_classes = []
             for class_type in list_of_specs:
 
-                class_type = class_type.upper()
+                class_type = class_type
 
                 if class_type in ("TANK", "HEALER"):
                     class_type += "S"
 
-                allowed_classes.extend(globals()[class_type])
+                if class_type in CLASSES:
+                    allowed_classes.extend(CLASS_TO_SPECS[class_type])
+                else:
+                    allowed_classes.extend(globals()[class_type])
 
         # If the class type is ALL, just use all classes
         else:
@@ -153,7 +171,7 @@ class Wow(Cog):
         
         # Roll the classes like a slot machine!
         message = None
-        rolls = random.randint(3, 10)
+        rolls = random.randint(6, 10)
         for i in range(rolls):            
             new_class = await self._get_random_class_spec(allowed_classes)
             time.sleep(0.03 * (i / 2))
