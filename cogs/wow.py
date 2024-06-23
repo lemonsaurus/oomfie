@@ -161,8 +161,8 @@ class Wow(Cog):
                 if (
                     spec not in ALLOWED_CLASS_TYPES 
                     and spec not in CLASSES
-                    and f"-{spec}" not in ALLOWED_CLASS_TYPES
-                    and f"-{spec}" not in CLASSES
+                    and spec[1:] not in ALLOWED_CLASS_TYPES
+                    and spec[1:] not in CLASSES
                 ):
                     return await ctx.send(f"❌ Invalid class type. Please provide something like 'healer', 'tank', 'ranged' or 'hunter'.")
             
