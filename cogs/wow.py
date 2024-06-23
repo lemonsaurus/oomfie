@@ -157,6 +157,7 @@ class Wow(Cog):
 
             # Validate data
             for spec in list_of_specs:
+                print(f"Now validating: {spec}")
                 if (
                     spec not in ALLOWED_CLASS_TYPES 
                     and spec not in CLASSES
