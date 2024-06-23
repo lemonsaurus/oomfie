@@ -78,7 +78,12 @@ class Wow(Cog):
         """!new_main, !new-main, or !newMain"""
         selected_class = random.choice(CLASSES_AND_SPECS)
 
-        await ctx.send(content=selected_class)
+        selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
+        selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
+
+        return_string = f"{selected_class_icon} {selected_class}"
+
+        await ctx.send(content=return_string)
 
 
 
