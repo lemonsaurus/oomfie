@@ -104,7 +104,7 @@ class Wow(Cog):
         await self._send_image(ctx, image_url=image)
 
     @commands.command(aliases=['new-main', "newmain"])
-    async def new_main(self, ctx: Context, *, class_type: str = "ALL"):
+    async def new_main(self, ctx: Context, *, class_type: str = commands.parameter(description="A type of class in WoW, like tank or healer.", default="ALL")):
         """
         Spin the wheel and select a new random main.
 
