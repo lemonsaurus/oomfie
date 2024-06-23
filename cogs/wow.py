@@ -147,16 +147,25 @@ class Wow(Cog):
         
         # Roll the classes like a slot machine!
         message = None
-        for i in range(random.randint(3, 10)):            
+        rolls = random.randint(3, 10)
+        for i in range(rolls):            
             new_class = await self._get_random_class_spec(allowed_classes)
             time.sleep(0.05 * i)
             
             # During the first iteration, send the message
             if i == 0: 
+                new_class = f"🎲 {new_class}"
                 message = await ctx.send(content=new_class)  # Returns a Message object
+
+            # On the last iteration, add some celebratory stuff to show we're done
+            elif i == rolls - 1:
+                new_class = f"{new_class}! 🎉🎉🎉"
+                await message.edit(content=new_class)
+
 
             # For all subsequent iterations, edit the message
             else:
+                new_class = f"🎲 {new_class}"
                 await message.edit(content=new_class)
 
 
