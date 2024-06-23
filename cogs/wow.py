@@ -8,7 +8,7 @@ from discord import File
 from discord.ext import commands
 from discord.ext.commands import Cog, Bot, Context
 
-from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASSES_AND_SPECS, CLASS_ICONS 
+from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASS_SPECS_FULL, CLASS_ICONS 
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
@@ -76,7 +76,7 @@ class Wow(Cog):
     @commands.command(aliases=['new-main', "newmain"])
     async def new_main(self, ctx: Context):
         """!new_main, !new-main, or !newMain"""
-        selected_class = random.choice(CLASSES_AND_SPECS)
+        selected_class = random.choice(CLASS_SPECS_FULL)
 
         selected_class_shortform = LONGCLASS_TO_SHORTCLASS[selected_class]
         selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
