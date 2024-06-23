@@ -184,7 +184,10 @@ class Wow(Cog):
 
             # Create a superset of allowed classes
             for class_type in list_of_specs:
-                if class_type in CLASSES:
+                if "ALL" in allowed_classes:
+                    allowed_classes.remove("ALL")
+                    allowed_classes.extend(CLASS_SPECS_FULL)
+                elif class_type in CLASSES:
                     allowed_classes.extend(CLASS_TO_SPECS[class_type])
                 elif class_type in ALLOWED_CLASS_TYPES:
                     allowed_classes.extend(globals()[class_type])
