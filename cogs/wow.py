@@ -106,7 +106,8 @@ class Wow(Cog):
 
             # For all subsequent iterations, edit the message
             else:
-                await message.edit(content=new_class)
+                await message.delete()
+                message = await ctx.send(content=new_class)
 
 
 
