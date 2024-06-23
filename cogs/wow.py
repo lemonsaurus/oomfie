@@ -173,15 +173,13 @@ class Wow(Cog):
             allowed_classes = []
             for class_type in list_of_specs:
 
-                class_type = class_type
-
                 if class_type in CLASSES:
                     allowed_classes.extend(CLASS_TO_SPECS[class_type])
                 elif class_type in ALLOWED_CLASS_TYPES:
                     allowed_classes.extend(globals()[class_type])
-                elif f"-{class_type}" in CLASSES:
+                elif class_type[0] == "-" and class_type[1:] in CLASSES:
                     allowed_classes = [spec for spec in allowed_classes if spec not in CLASS_TO_SPECS[class_type[1:]]]
-                elif f"-{class_type}" in ALLOWED_CLASS_TYPES:
+                elif class_type[0] == "-" and class_type[1:] in ALLOWED_CLASS_TYPES:
                     allowed_classes = [spec for spec in allowed_classes if spec not in globals()[class_type[1:]]]
                     
 
