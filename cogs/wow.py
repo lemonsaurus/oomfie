@@ -128,7 +128,7 @@ class Wow(Cog):
             # Validate data
             for spec in list_of_specs:
                 if spec.upper() not in ALLOWED_CLASS_TYPES:
-                    return await ctx.send(f"❌ Invalid class type. Please use one of {", ".join(ALLOWED_CLASS_TYPES)}.")
+                    return await ctx.send(f"❌ Invalid class type. Please use one of {', '.join(ALLOWED_CLASS_TYPES)}.")
             
             # Create a superset of allowed classes
             allowed_classes = []
