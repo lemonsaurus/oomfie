@@ -81,7 +81,8 @@ class Wow(Cog):
         #if random.randint(1, 100) <= 3:
         if True:
             selected_class_icon = f"<:treat:{CLASS_ICONS['treat']}>"
-            return f"{selected_class_icon}   **{await self._uwuify(selected_class)}**"
+            uwu_class = await self._uwuify(selected_class)
+            return f"{selected_class_icon}   **{uwu_class.title()}**"
         else:
             selected_class_icon = f"<:{selected_class_shortform}:{CLASS_ICONS[selected_class_shortform]}>"
             return f"{selected_class_icon}   **{selected_class}**"
@@ -108,8 +109,9 @@ class Wow(Cog):
 
             # For all subsequent iterations, edit the message
             else:
+                _message = await ctx.send(content=new_class)
                 await message.delete()
-                message = await ctx.send(content=new_class)
+                message = _message
 
 
 
