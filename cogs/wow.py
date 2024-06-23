@@ -1,6 +1,7 @@
 import aiohttp
 import io
 import os
+import random
 
 from aiowowapi import WowApi
 from discord import File
@@ -12,6 +13,49 @@ from discord.ext.commands import Cog, Bot, Context
 # can't connect to the WoW API.
 BNET_CLIENT_ID = os.environ["BNET_CLIENT_ID"]
 BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
+
+# List of all classes and specs
+CLASSES_AND_SPECS = [
+    "Blood Death Knight",
+    "Frost Death Knight",
+    "Unholy Death Knight",
+    "Havoc Demon Hunter",
+    "Vengeance Demon Hunter",
+    "Balance Druid",
+    "Feral Druid",
+    "Guardian Druid",
+    "Restoration Druid",
+    "Devastation Evoker",
+    "Preservation Evoker",
+    "Augmentation Evoker",
+    "Beast Mastery Hunter",
+    "Marksmanship Hunter",
+    "Survival Hunter",
+    "Arcane Mage",
+    "Fire Mage",
+    "Frost Mage",
+    "Brewmaster Monk",
+    "Mistweaver Monk",
+    "Windwalker Monk",
+    "Holy Paladin",
+    "Protection Paladin",
+    "Retribution Paladin",
+    "Discipline Priest",
+    "Holy Priest",
+    "Shadow Priest",
+    "Assassination Rogue",
+    "Outlaw Rogue",
+    "Subtlety Rogue",
+    "Elemental Shaman",
+    "Enhancement Shaman",
+    "Restoration Shaman",
+    "Affliction Warlock",
+    "Demonology Warlock",
+    "Destruction Warlock",
+    "Arms Warrior",
+    "Fury Warrior",
+    "Protection Warrior"
+]
 
 
 class Wow(Cog):
@@ -70,6 +114,13 @@ class Wow(Cog):
         """Show an image of a specific WoW character."""
         image = await self._get_image(player, image_type, realm, region)
         await self._send_image(ctx, image_url=image)
+
+    @commands.command(aliases=['new-main', "newmain", "newMain"])
+    async def new_main(self, ctx: Context):
+        """!new_main, !new-main, or !newMain"""
+        selected_class = random.choice(CLASSES_AND_SPECS)
+        
+        await ctx.send(content=selected_class)
 
 
 
