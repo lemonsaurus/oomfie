@@ -1,6 +1,7 @@
 import io
 import os
 import random
+import time
 
 import aiohttp
 from aiowowapi import WowApi
@@ -97,8 +98,9 @@ class Wow(Cog):
         
         # Roll the classes like a slot machine!
         message = None
-        for i in range(10):            
+        for i in range(5):            
             new_class = await self._get_random_class_spec()
+            time.sleep(0.2 * i)
             
             # During the first iteration, send the message
             if i == 0: 
