@@ -8,54 +8,12 @@ from discord import File
 from discord.ext import commands
 from discord.ext.commands import Cog, Bot, Context
 
+from constants.warcraft import LONGCLASS_TO_SHORTCLASS, CLASSES_AND_SPECS, CLASS_ICONS 
 
 # These also need to exist in the environment variables for Railway, or we 
 # can't connect to the WoW API.
 BNET_CLIENT_ID = os.environ["BNET_CLIENT_ID"]
 BNET_CLIENT_SECRET = os.environ["BNET_CLIENT_SECRET"]
-
-# List of all classes and specs
-CLASSES_AND_SPECS = [
-    "Blood Death Knight",
-    "Frost Death Knight",
-    "Unholy Death Knight",
-    "Havoc Demon Hunter",
-    "Vengeance Demon Hunter",
-    "Balance Druid",
-    "Feral Druid",
-    "Guardian Druid",
-    "Restoration Druid",
-    "Devastation Evoker",
-    "Preservation Evoker",
-    "Augmentation Evoker",
-    "Beast Mastery Hunter",
-    "Marksmanship Hunter",
-    "Survival Hunter",
-    "Arcane Mage",
-    "Fire Mage",
-    "Frost Mage",
-    "Brewmaster Monk",
-    "Mistweaver Monk",
-    "Windwalker Monk",
-    "Holy Paladin",
-    "Protection Paladin",
-    "Retribution Paladin",
-    "Discipline Priest",
-    "Holy Priest",
-    "Shadow Priest",
-    "Assassination Rogue",
-    "Outlaw Rogue",
-    "Subtlety Rogue",
-    "Elemental Shaman",
-    "Enhancement Shaman",
-    "Restoration Shaman",
-    "Affliction Warlock",
-    "Demonology Warlock",
-    "Destruction Warlock",
-    "Arms Warrior",
-    "Fury Warrior",
-    "Protection Warrior"
-]
 
 
 class Wow(Cog):
